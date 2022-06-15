@@ -15,7 +15,7 @@
 <script>
 
 import GameCard from '@/components/GameCard.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 export default {
   name: 'App',
@@ -27,11 +27,26 @@ export default {
   setup() {
     const cardList = ref([])
     const userSelection = ref([])
-    const status = ref('')
+    
+    const status = computed (() => {
+      if (remainingPairs.value === 0) {
+        return "Player wins!"
+      }
+      else {
+        return `Remaining Pairs ${remainingPairs.value}`
+      }
+    })
+
+    const remainingPairs = computed(() => {
+      const remainingCards = cardList.value.filter
+      (card => card.matched === false).length
+
+      return remainingCards / 2
+    })
 
     for (let i = 0; i<16; i++) {
       cardList.value.push({
-        value: i,
+        value: 8,
         visible: false,
         position: i,
         matched: false
@@ -61,6 +76,8 @@ export default {
           cardList.value[cardOne.position].matched = true;
           cardList.value[cardTwo.position].matched = true;
 
+          userSelection.value.length = 0
+
         }
         else {
           status.value = 'Mismatched.'
@@ -69,7 +86,6 @@ export default {
           cardList.value[cardTwo.position].visible = false 
 
           userSelection.value.length = 0
-
         }
 
         

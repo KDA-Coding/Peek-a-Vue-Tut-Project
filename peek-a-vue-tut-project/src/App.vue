@@ -3,13 +3,17 @@
   <section class="game-board">
     <GameCard v-for="(card, index ) in cardList" 
     :key="`card-${index}`"
-    :value="card" />
+    :value="card.value"
+    :position="card.position"
+    :visible="card.visible"
+    @select-card="flipCard" />
   </section>
 </template>
 
 <script>
 
 import GameCard from '@/components/GameCard.vue'
+import { ref } from 'vue'
 
 export default {
   name: 'App',
@@ -19,13 +23,21 @@ export default {
   },
 
   setup() {
-    const cardList = []
+    const cardList = ref([])
 
     for (let i = 0; i<16; i++) {
-      cardList.push(i)
+      cardList.value.push({
+        value: i,
+        visible: false,
+        position: i
+      })
     }
 
-    return {cardList }
+    const flipCard = (payload) => {
+      cardList.value[payload.position].visible = true
+    }
+
+    return { cardList , flipCard}
   }
   
 }
@@ -38,10 +50,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-.card {
-  border: 5px solid #ccc;
 }
 
 .game-board {

@@ -118,11 +118,13 @@ export default {
 
         }
         else {
-
-          cardList.value[cardOne.position].visible = false 
-          cardList.value[cardTwo.position].visible = false 
+          setTimeout(() => {
+            cardList.value[cardOne.position].visible = false 
+            cardList.value[cardTwo.position].visible = false 
+          }, 2000)
 
           userSelection.value.length = 0
+
         }
 
         

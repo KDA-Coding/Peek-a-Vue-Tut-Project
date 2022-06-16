@@ -1,5 +1,5 @@
 <template>
-    <div class="card" @click="selectCard">
+    <div class="card" :class="flippedStyles" @click="selectCard">
         <div v-if="visible" class="card-face is-front">
             <img :src="`/images/${value}.png`"  :alt="value"/>
             <img v-if="matched" 
@@ -11,7 +11,11 @@
 </template>
 
 <script>
+
+    import { computed } from 'vue'
+
 export default {
+
     props: {
         position: {
             type: Number,
@@ -33,6 +37,13 @@ export default {
     },
 
     setup (props, context) {
+
+        const flippedStyles = computed(() => {
+            if(props.visible){
+                return 'is-flipped'
+            }
+        })
+
         const selectCard =  () => {
             context.emit('select-card', {
                 position: props.position,
@@ -41,7 +52,7 @@ export default {
             })
         }
 
-        return { selectCard }
+        return { selectCard, flippedStyles }
     }
 }
 </script>
@@ -50,6 +61,14 @@ export default {
 
 .card {
   position: relative;
+
+  transition: 0.5s transform ease-in;
+}
+
+.card.is-flipped {
+
+    transform: rotateY(180deg);
+
 }
 
 .card-face {

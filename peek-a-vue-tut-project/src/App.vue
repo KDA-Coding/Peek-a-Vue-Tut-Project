@@ -10,10 +10,12 @@
     @select-card="flipCard" />
   </section>
   <h2>{{ status }}</h2>
+  <button @click="shuffleCards">Shuffle Cards</button>
 </template>
 
 <script>
 
+import _ from 'lodash'
 import GameCard from '@/components/GameCard.vue'
 import { ref, watch, computed } from 'vue'
 
@@ -44,10 +46,14 @@ export default {
       return remainingCards / 2
     })
 
+    const shuffleCards = () => {
+      cardList.value = _.shuffle(cardList.value)
+    }
+
     for (let i = 0; i<16; i++) {
       cardList.value.push({
-        value: 8,
-        visible: false,
+        value: i,
+        visible: true,
         position: i,
         matched: false
       })
@@ -92,7 +98,7 @@ export default {
       }
     }, {deep: true})
 
-    return { cardList, flipCard, userSelection, status }
+    return { cardList, flipCard, userSelection, status, shuffleCards }
   }
   
 }

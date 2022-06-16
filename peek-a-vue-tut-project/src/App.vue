@@ -110,7 +110,8 @@ export default {
             }
             else {
               userSelection.value[1] = payload
-            }        
+            }
+            //Reduce life counter by 1 for matcher        
       }
       else {
         userSelection.value[0] = payload

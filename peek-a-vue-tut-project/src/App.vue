@@ -63,7 +63,15 @@ export default {
       })
     }
 
-    const cardItems = [1,2,3,4,5,6,7,8]
+    const cardItems = [
+      'bat', 
+      'candy', 
+      'cauldron', 
+      'cupcake', 
+      'ghost', 
+      'moon', 
+      'pumpkin', 
+      'witch-hat']
 
     cardItems.forEach(item => {
       
@@ -145,20 +153,35 @@ export default {
 </script>
 
 <style>
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin-top: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-image: url('../public/images/page-bg.png');
+  background-color: #00070c;
+  height: 100vh;
+  color: #fff;
+  padding-top: 30px;
 }
 
 .game-board {
   justify-content: center;
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px;
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
+  grid-template-columns: repeat(4, 120px);
+  grid-template-rows: repeat(4, 120px);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 }
 </style>

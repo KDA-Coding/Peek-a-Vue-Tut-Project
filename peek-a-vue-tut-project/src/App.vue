@@ -1,5 +1,6 @@
 <template>
-  <h1>Peek-a-Vue</h1>
+  <h1 class="sr-only">Peek-a-Vue</h1>
+  <img src="../public/images/peek-a-vue-title.png" class="title"/>
   <section class="game-board">
     <GameCard v-for="(card, index ) in cardList" 
     :key="`card-${index}`"
@@ -10,7 +11,10 @@
     @select-card="flipCard" />
   </section>
   <h2>{{ status }}</h2>
-  <button @click="restartGame">Restart Game</button>
+  <button @click="restartGame" class="button">
+  <img src="/images/restart.svg"
+  alt="Restart Icon"/>
+  Restart Game </button>
 </template>
 
 <script>
@@ -174,15 +178,45 @@ h1 {
   background-color: #00070c;
   height: 100vh;
   color: #fff;
-  padding-top: 30px;
+  padding-top: 15px;
+}
+
+.button {
+  background-color: orange;
+  color: white;
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.button img {
+  padding-right: 5px;
 }
 
 .game-board {
   justify-content: center;
   display: grid;
-  grid-template-columns: repeat(4, 120px);
-  grid-template-rows: repeat(4, 120px);
+  grid-template-columns: repeat(4, 110px);
+  grid-template-rows: repeat(4, 110px);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.title {
+  padding-bottom: 15px;
 }
 </style>

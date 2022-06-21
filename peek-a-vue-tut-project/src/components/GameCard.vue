@@ -1,12 +1,12 @@
 <template>
     <div class="card" :class="flippedStyles" @click="selectCard">
-        <div v-if="visible" class="card-face is-front">
+        <div class="card-face is-front">
             <img :src="`/images/${value}.png`"  :alt="value"/>
             <img v-if="matched" 
             src="../../public/images/checkmark.svg"
             class="icon-checkmark"/>
         </div>
-        <div v-else class="card-face is-back"></div>
+        <div class="card-face is-back"></div>
     </div>
 </template>
 
@@ -61,14 +61,12 @@ export default {
 
 .card {
   position: relative;
-
   transition: 0.5s transform ease-in;
+  transform-style: preserve-3d;
 }
 
 .card.is-flipped {
-
     transform: rotateY(180deg);
-
 }
 
 .card-face {
@@ -79,11 +77,13 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    backface-visibility: hidden;
 }
 
 .card-face.is-front {
     background-image: url('../../public/images/card-bg.png');
     color: white;
+    transform: rotateY(180deg);
 }
 
 .card-face.is-back {

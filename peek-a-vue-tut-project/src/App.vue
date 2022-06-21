@@ -22,6 +22,7 @@
 import _ from 'lodash'
 import GameCard from '@/components/GameCard.vue'
 import { ref, watch, computed } from 'vue'
+import { launchConfetti } from './utilities/confetti'
 
 export default {
   name: 'App',
@@ -119,6 +120,14 @@ export default {
         userSelection.value[0] = payload
       }
     }
+
+    watch(remainingPairs, currentValue => {
+
+      if(currentValue === 0) {
+        launchConfetti()
+      }
+
+    } )
 
     watch(userSelection, currentValue => {
       if(currentValue.length === 2) {

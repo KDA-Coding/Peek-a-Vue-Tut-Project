@@ -1,6 +1,10 @@
 <template>
   <h1 class="sr-only">Peek-a-Vue</h1>
   <img src="../public/images/peek-a-vue-title.png" class="title"/>
+  <section class="description">
+    <p>Welcome to Peek-a-Vue!</p>
+    <p>A card matching game powered by Vue.js 3!</p>
+  </section>
   <transition-group tag="section" class="game-board" name="shuffle-card">
     <GameCard v-for="card in cardList" 
     :key="`${card.value}-${card.variant}`"
@@ -10,8 +14,12 @@
     :visible="card.visible"
     @select-card="flipCard" />
   </transition-group>
-  <h2>{{ status }}</h2>
-  <button @click="restartGame" class="button">
+  <h2 class="status">{{ status }}</h2>
+  <button v-if="newPlayer" @click="startGame" class="button">
+  <img src="/images/play.svg"
+  alt="Start Icon"/>
+  Start Game </button>
+  <button v-else @click="restartGame" class="button">
   <img src="/images/restart.svg"
   alt="Restart Icon"/>
   Restart Game </button>
@@ -34,7 +42,14 @@ export default {
   setup() {
     const cardList = ref([])
     const userSelection = ref([])
-    
+    const newPlayer = ref(true)
+
+    const startGame = () => {
+      newPlayer.value = false;
+
+      restartGame()
+    }
+
     const status = computed (() => {
       if (remainingPairs.value === 0) {
         return "Player wins!"
@@ -87,7 +102,7 @@ export default {
       cardList.value.push({
         value: item,
         variant: 2,
-        visible: false,
+        visible: true,
         position: null,
         matched: false
       })
@@ -157,8 +172,8 @@ export default {
       }
     }, {deep: true})
 
-    return { cardList, userSelection, status, 
-            flipCard, restartGame }
+    return { cardList, userSelection, status, newPlayer,
+            startGame, flipCard, restartGame }
   }
   
 }
@@ -188,6 +203,23 @@ h1 {
   padding-top: 15px;
 }
 
+.description {
+  font-family: 'Titillium-Web', sans-serif;
+}
+
+.description p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.description p:last-child {
+  margin-bottom: 15px;
+}
+
+.status {
+  font-family: 'Titillium-Web', sans-serif;
+}
+
 .button {
   background-color: orange;
   color: white;
@@ -197,6 +229,10 @@ h1 {
   justify-content: center;
   margin: 0 auto;
   font-weight: bold;
+  font-family: 'Titillium-Web', sans-serif;
+  font-size: 1.1rem;
+  border: 0;
+  border-radius: 10px;
 }
 
 .button img {
@@ -206,8 +242,8 @@ h1 {
 .game-board {
   justify-content: center;
   display: grid;
-  grid-template-columns: repeat(4, 110px);
-  grid-template-rows: repeat(4, 110px);
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(4, 100px);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
@@ -224,7 +260,7 @@ h1 {
 }
 
 .title {
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 .shuffle-card-move {
